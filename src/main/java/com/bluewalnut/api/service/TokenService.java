@@ -25,6 +25,13 @@ public class TokenService {
     private final CardRepository cardRepository;
     private final CheckoutRepository checkoutRepository;
 
+    public TokenT findToken(String token) {
+        TokenT tokenT = tokenRepository.findById(token)
+                .orElseThrow(() -> new BusinessException(ErrorCode.TOKEN_NOT_FOUND));
+
+        return tokenT;
+    }
+
     public String requestCardRefId(String ci, String encryptedCardNo) {
 
         // 중복 체크

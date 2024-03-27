@@ -23,7 +23,6 @@ public class PaymentService {
     private final PGService pgService;
 
     private final CheckoutRepository checkoutRepository;
-    private final TokenRepository tokenRepository;
 
     public String registryCard(String ci, String encryptedCardNo) {
         return tokenService.requestCardRefId(ci, encryptedCardNo);
@@ -34,6 +33,12 @@ public class PaymentService {
     }
 
     public String payByCardRefId(String ci, String cardRefId, String amount) {
+
+        // cardRefId Check
+        List<String> cardList = findCard(ci);
+        if(!cardList.contains(cardRefId)) {
+            throw new BusinessException(ErrorCode.CARD_NOT_FOUNT);
+        }
 
         CheckoutT checkoutT = CheckoutT.builder()
                 .id(UUID.randomUUID().toString())
@@ -46,7 +51,6 @@ public class PaymentService {
                 .build();
         checkoutRepository.save(checkoutT); // 결제정보 저장
 
-        // return tokenService.requestToken(checkoutT.getId()); // token 반환
         return checkoutT.getId(); // checkoutId 반환
     }
 
@@ -59,9 +63,7 @@ public class PaymentService {
 
     public String approvalToken(String token) {
 
-        TokenT tokenT = tokenRepository.findById(token)
-                .orElseThrow(() -> new BusinessException(ErrorCode.TOKEN_NOT_FOUND));
-
+        TokenT tokenT = tokenService.findToken(token);
         CheckoutT checkoutT = checkoutRepository.findById(tokenT.getCheckoutId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
 
