@@ -9,7 +9,7 @@ public enum ErrorCode {
     CHECKOUT_NOT_FOUND(409, "결제요청 정보를 찾을 수 없습니다."),
     TOKEN_MAPPING_FAIL(409, "토큰 생성에 실패했습니다."),
     TOKEN_NOT_FOUND(409, "토큰을 찾을 수 없습니다."),
-    CARD_NOT_FOUNT(409, "카드를 찾을 수 없습니다.")
+    CARD_NOT_FOUND(409, "카드를 찾을 수 없습니다.")
     ; // End
 
     private final int status;

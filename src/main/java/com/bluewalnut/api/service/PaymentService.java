@@ -37,7 +37,7 @@ public class PaymentService {
         // cardRefId Check
         List<String> cardList = findCard(ci);
         if(!cardList.contains(cardRefId)) {
-            throw new BusinessException(ErrorCode.CARD_NOT_FOUNT);
+            throw new BusinessException(ErrorCode.CARD_NOT_FOUND);
         }
 
         CheckoutT checkoutT = CheckoutT.builder()
