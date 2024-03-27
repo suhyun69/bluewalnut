@@ -2,7 +2,6 @@ package com.bluewalnut.api.service;
 
 import com.bluewalnut.api.config.exception.BusinessException;
 import com.bluewalnut.api.config.exception.ErrorCode;
-import com.bluewalnut.api.domain.CheckoutReq;
 import com.bluewalnut.api.domain.CheckoutStatus;
 import com.bluewalnut.api.entity.CardT;
 import com.bluewalnut.api.entity.CheckoutT;
@@ -10,10 +9,10 @@ import com.bluewalnut.api.entity.TokenT;
 import com.bluewalnut.api.repository.CardRepository;
 import com.bluewalnut.api.repository.CheckoutRepository;
 import com.bluewalnut.api.repository.TokenRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,7 +52,7 @@ public class TokenService {
         CheckoutT t = checkoutRepository.findById(checkoutId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
 
-        // 중복 체크
+        // 토큰 발행 중복 체크
         if(tokenRepository.existsByCheckoutId(checkoutId)) {
             throw new BusinessException(ErrorCode.REQUEST_TOKEN_DUPLICATED);
         }
@@ -73,5 +72,27 @@ public class TokenService {
         checkoutRepository.save(t);
 
         return token;
+    }
+
+    public Boolean verifyToken(String token) {
+
+        TokenT tokenT = tokenRepository.findById(token)
+                .orElseThrow(() -> new BusinessException(ErrorCode.TOKEN_NOT_FOUND));
+
+        CheckoutT checkoutT = checkoutRepository.findById(tokenT.getCheckoutId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
+
+        // validation
+        // 결제 요청의 status가 Executing일 경우에만 유효
+        if(!CheckoutStatus.of(checkoutT.getStatus()).equals(CheckoutStatus.Executing)) {
+            return false;
+        }
+
+        // 결제 요청의 만료일 초과 시 유효하지 않음
+        if(LocalDateTime.now().isAfter(checkoutT.getExpirationTime())) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -11,7 +11,7 @@ public class UserService {
 
     private final PaymentService paymentService;
 
-    public String enrollCard(String ci, String cardNo) {
+    public String registryCard(String ci, String cardNo) {
         String encryptedCardNo = cardNo;
         return paymentService.registryCard(ci, encryptedCardNo);
     }
@@ -20,7 +20,7 @@ public class UserService {
         return paymentService.findCard(ci);
     }
 
-    public void payment(String ci, String cardRefId, String amount) {
-        paymentService.payByCardRefId(ci, cardRefId, amount);
+    public String payment(String ci, String cardRefId, String amount) {
+        return paymentService.payByCardRefId(ci, cardRefId, amount); // token
     }
 }

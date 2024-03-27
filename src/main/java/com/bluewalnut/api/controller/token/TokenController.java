@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/token/v1/")
+@RequestMapping("/v1/token")
 @Tag(name = "Token", description = "Token API Document")
 public class TokenController {
 
     private final TokenService tokenService;
 
-    @GetMapping("/requestToken")
-    @Operation(summary = "토큰 요청", description = "토큰 발행")
+    @GetMapping("/issue")
+    @Operation(summary = "Request Token", description = "토큰 발행")
     public ResponseEntity<RequestTokenResponse> RequestToken(String checkoutId) {
         String token = tokenService.requestToken(checkoutId);
         RequestTokenResponse dto = new RequestTokenResponse(token);

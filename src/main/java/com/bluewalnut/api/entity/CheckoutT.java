@@ -1,6 +1,5 @@
 package com.bluewalnut.api.entity;
 
-import com.bluewalnut.api.domain.CheckoutReq;
 import com.bluewalnut.api.domain.CheckoutStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Builder

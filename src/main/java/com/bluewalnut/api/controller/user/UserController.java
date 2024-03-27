@@ -20,16 +20,16 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user/v1/")
+@RequestMapping("/v1/user")
 @Tag(name = "User", description = "User API Document")
 public class UserController {
 
     private final UserService userService;
 
     @PostMapping("/card")
-    @Operation(summary = "Registry Card", description = "RefCardId 발행")
-    public ResponseEntity<EnrollCardResponse> enrollCard(EnrollCardRequest request) {
-        String refCardId = userService.enrollCard(request.getCi(), request.getCardNo());
+    @Operation(summary = "카드 등록", description = "RefCardId 발행")
+    public ResponseEntity<EnrollCardResponse> registryCard(EnrollCardRequest request) {
+        String refCardId = userService.registryCard(request.getCi(), request.getCardNo());
         EnrollCardResponse response = new EnrollCardResponse(refCardId);
         return ResponseEntity.ok().body(response);
     }
@@ -40,12 +40,5 @@ public class UserController {
         List<String> cardList = userService.findCard(ci);
         FindCardResponse response = new FindCardResponse(cardList);
         return ResponseEntity.ok().body(response);
-    }
-
-    @PostMapping("/payment")
-    @Operation(summary = "Pay by Card_Ref_ID", description = "결제")
-    public String payment(PaymentRequest request) {
-        userService.payment(request.getCi(), request.getCardRefId(), request.getAmount());
-        return "payment";
     }
 }

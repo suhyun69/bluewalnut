@@ -1,7 +1,8 @@
 package com.bluewalnut.api.service;
 
 
-import com.bluewalnut.api.domain.CheckoutReq;
+import com.bluewalnut.api.config.exception.BusinessException;
+import com.bluewalnut.api.config.exception.ErrorCode;
 import com.bluewalnut.api.domain.CheckoutStatus;
 import com.bluewalnut.api.entity.CheckoutT;
 import com.bluewalnut.api.repository.CheckoutRepository;
@@ -40,6 +41,14 @@ public class PaymentService {
                 .build();
         checkoutRepository.save(checkoutT); // 결제정보 저장
 
-        return tokenService.requestToken(checkoutT.getId());
+        // return tokenService.requestToken(checkoutT.getId()); // token 반환
+        return checkoutT.getId(); // checkoutId 반환
+    }
+
+    public String findStatus(String checkoutId) {
+        CheckoutT checkoutT = checkoutRepository.findById(checkoutId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
+
+        return CheckoutStatus.of(checkoutT.getStatus()).toString();
     }
 }
