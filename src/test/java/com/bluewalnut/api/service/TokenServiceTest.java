@@ -14,6 +14,9 @@ class TokenServiceTest {
 
     private static String DUMMY_CHECKOUT_ID = "12345";
 
+    private static String DUMMY_CI = "A12345";
+    private static String DUMMY_CARD_NO = "1234-5678-9012-3456";
+
     @Autowired
     private TokenService tokenService;
 
@@ -38,6 +41,30 @@ class TokenServiceTest {
         }
         catch (Exception ex) {
             assert(ex.getMessage().equals(ErrorCode.TOKEN_PUBLISH_REQ_DUPLICATED.getMessage()));
+        }
+    }
+
+    @Test
+    @DisplayName("카드 등록")
+    @Transactional
+    void card_enroll() {
+
+        tokenService.saveCard(DUMMY_CI, DUMMY_CARD_NO);
+        assert(tokenService.findCard(DUMMY_CI).size() == 1);
+    }
+
+    @Test
+    @DisplayName("카드 등록 - 중복")
+    @Transactional
+    void card_enroll_duplicated() {
+
+        tokenService.saveCard(DUMMY_CI, DUMMY_CARD_NO);
+
+        try {
+            tokenService.saveCard(DUMMY_CI, DUMMY_CARD_NO);
+        }
+        catch (Exception ex) {
+            assert(ex.getMessage().equals(ErrorCode.CARD_DUPLICATED.getMessage()));
         }
     }
 

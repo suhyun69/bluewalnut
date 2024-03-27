@@ -11,18 +11,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TOKEN")
-public class TokenT {
+@Table(name = "CARD")
+public class CardT {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long seq;
 
-    private String checkoutId;
-    private String token;
+    private String ci;
+    private String cardNo;
+    private String cardRefId;
 
-    public TokenT(String checkoutId, String token) {
-        this.checkoutId = checkoutId;
-        this.token = token;
+    public CardT(String ci, String cardNo, String cardRefId) {
+        this.ci = ci;
+        this.cardNo = cardNo;
+        this.cardRefId = cardRefId;
     }
 }

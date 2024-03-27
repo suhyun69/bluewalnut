@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/token/v1/")
-@Tag(name = "PublishTokenResponseDto", description = "PublishTokenResponseDto API Document")
+@Tag(name = "Token", description = "Token API Document")
 public class TokenController {
 
     private final TokenService tokenService;
