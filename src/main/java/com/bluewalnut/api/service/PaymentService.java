@@ -5,7 +5,9 @@ import com.bluewalnut.api.config.exception.BusinessException;
 import com.bluewalnut.api.config.exception.ErrorCode;
 import com.bluewalnut.api.domain.CheckoutStatus;
 import com.bluewalnut.api.entity.CheckoutT;
+import com.bluewalnut.api.entity.TokenT;
 import com.bluewalnut.api.repository.CheckoutRepository;
+import com.bluewalnut.api.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,10 @@ import java.util.UUID;
 public class PaymentService {
 
     private final TokenService tokenService;
+    private final PGService pgService;
+
     private final CheckoutRepository checkoutRepository;
+    private final TokenRepository tokenRepository;
 
     public String registryCard(String ci, String encryptedCardNo) {
         return tokenService.requestCardRefId(ci, encryptedCardNo);
@@ -50,5 +55,20 @@ public class PaymentService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
 
         return CheckoutStatus.of(checkoutT.getStatus()).toString();
+    }
+
+    public String approvalToken(String token) {
+
+        TokenT tokenT = tokenRepository.findById(token)
+                .orElseThrow(() -> new BusinessException(ErrorCode.TOKEN_NOT_FOUND));
+
+        CheckoutT checkoutT = checkoutRepository.findById(tokenT.getCheckoutId())
+                .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
+
+        // checkout status update
+        checkoutT.updateStatus(pgService.approvalToken(token) ? CheckoutStatus.Success : CheckoutStatus.Failed);
+        checkoutRepository.save(checkoutT);
+
+        return checkoutT.getId();
     }
 }

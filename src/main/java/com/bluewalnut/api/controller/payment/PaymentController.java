@@ -1,5 +1,6 @@
 package com.bluewalnut.api.controller.payment;
 
+import com.bluewalnut.api.controller.payment.dto.ApprovalTokenResponse;
 import com.bluewalnut.api.controller.payment.dto.FindStatusResponse;
 import com.bluewalnut.api.controller.payment.dto.PayByCardRefIdRequest;
 import com.bluewalnut.api.controller.payment.dto.PayByCardRefIdResponse;
@@ -36,6 +37,14 @@ public class PaymentController {
     public ResponseEntity<FindStatusResponse> findStatus(String checkoutId) {
         String status = paymentService.findStatus(checkoutId);
         FindStatusResponse response = new FindStatusResponse(status);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/approval")
+    @Operation(summary = "ApprovalToken", description = "PG사 결제 요청")
+    public ResponseEntity<ApprovalTokenResponse> approvalToken(String token) {
+        String checkoutId = paymentService.approvalToken(token);
+        ApprovalTokenResponse response = new ApprovalTokenResponse(checkoutId);
         return ResponseEntity.ok().body(response);
     }
 }
