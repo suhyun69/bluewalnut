@@ -83,9 +83,7 @@ public class TokenService {
 
     public Boolean verifyToken(String token) {
 
-        TokenT tokenT = tokenRepository.findById(token)
-                .orElseThrow(() -> new BusinessException(ErrorCode.TOKEN_NOT_FOUND));
-
+        TokenT tokenT = findToken(token);
         CheckoutT checkoutT = checkoutRepository.findById(tokenT.getCheckoutId())
                 .orElseThrow(() -> new BusinessException(ErrorCode.CHECKOUT_NOT_FOUND));
 
