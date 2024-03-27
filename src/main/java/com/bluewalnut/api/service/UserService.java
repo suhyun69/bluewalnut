@@ -1,6 +1,7 @@
 package com.bluewalnut.api.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +11,10 @@ import java.util.List;
 public class UserService {
 
     private final PaymentService paymentService;
+    private final PasswordEncoder passwordEncoder;
 
     public String registryCard(String ci, String cardNo) {
-        String encryptedCardNo = cardNo;
+        String encryptedCardNo = passwordEncoder.encode(cardNo);
         return paymentService.registryCard(ci, encryptedCardNo);
     }
 
