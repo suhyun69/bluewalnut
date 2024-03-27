@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -26,7 +23,7 @@ public class PaymentController {
 
     @PostMapping("/checkout")
     @Operation(summary = "Pay by Card_Ref_ID", description = "checkoutId 생성")
-    public ResponseEntity<PayByCardRefIdResponse> payByCardRefId(PayByCardRefIdRequest request) {
+    public ResponseEntity<PayByCardRefIdResponse> payByCardRefId(@RequestBody PayByCardRefIdRequest request) {
         String checkoutId = paymentService.payByCardRefId(request.getCi(), request.getCardRefId(), request.getAmount());
         PayByCardRefIdResponse response = new PayByCardRefIdResponse(checkoutId);
         return ResponseEntity.ok().body(response);

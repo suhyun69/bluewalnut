@@ -40,7 +40,7 @@ class TokenServiceTest {
             tokenService.requestToken(DUMMY_CHECKOUT_ID);
         }
         catch (Exception ex) {
-            assert(ex.getMessage().equals(ErrorCode.TOKEN_PUBLISH_REQ_DUPLICATED.getMessage()));
+            assert(ex.getMessage().equals(ErrorCode.REQUEST_TOKEN_DUPLICATED.getMessage()));
         }
     }
 
