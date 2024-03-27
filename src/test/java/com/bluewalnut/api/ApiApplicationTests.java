@@ -1,4 +1,4 @@
-package com.bluewalnet.api;
+package com.bluewalnut.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
