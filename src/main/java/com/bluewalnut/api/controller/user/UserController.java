@@ -3,6 +3,7 @@ package com.bluewalnut.api.controller.user;
 import com.bluewalnut.api.controller.user.dto.EnrollCardRequest;
 import com.bluewalnut.api.controller.user.dto.EnrollCardResponse;
 import com.bluewalnut.api.controller.user.dto.FindCardResponse;
+import com.bluewalnut.api.controller.user.dto.PaymentRequest;
 import com.bluewalnut.api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +27,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/card")
-    @Operation(summary = "카드 등록", description = "RefCardId 발행")
+    @Operation(summary = "Registry Card", description = "RefCardId 발행")
     public ResponseEntity<EnrollCardResponse> enrollCard(EnrollCardRequest request) {
         String refCardId = userService.enrollCard(request.getCi(), request.getCardNo());
         EnrollCardResponse response = new EnrollCardResponse(refCardId);
@@ -39,5 +40,12 @@ public class UserController {
         List<String> cardList = userService.findCard(ci);
         FindCardResponse response = new FindCardResponse(cardList);
         return ResponseEntity.ok().body(response);
+    }
+
+    @PostMapping("/payment")
+    @Operation(summary = "Pay by Card_Ref_ID", description = "결제")
+    public String payment(PaymentRequest request) {
+        userService.payment(request.getCi(), request.getCardRefId(), request.getAmount());
+        return "payment";
     }
 }

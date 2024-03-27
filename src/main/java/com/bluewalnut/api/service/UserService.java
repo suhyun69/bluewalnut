@@ -13,10 +13,14 @@ public class UserService {
 
     public String enrollCard(String ci, String cardNo) {
         String encryptedCardNo = cardNo;
-        return paymentService.enrollCard(ci, encryptedCardNo);
+        return paymentService.registryCard(ci, encryptedCardNo);
     }
 
     public List<String> findCard(String ci) {
         return paymentService.findCard(ci);
+    }
+
+    public void payment(String ci, String cardRefId, String amount) {
+        paymentService.payByCardRefId(ci, cardRefId, amount);
     }
 }

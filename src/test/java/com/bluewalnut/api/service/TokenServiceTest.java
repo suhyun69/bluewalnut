@@ -25,7 +25,7 @@ class TokenServiceTest {
     @Transactional
     void token_publish() {
 
-        String token = tokenService.publish(DUMMY_CHECKOUT_ID);
+        String token = tokenService.requestToken(DUMMY_CHECKOUT_ID);
         assert(token.length() == "56f3234d-ad68-4d8d-9ba5-c96a9b9fe124".length());
     }
 
@@ -34,10 +34,10 @@ class TokenServiceTest {
     @Transactional
     void token_publish_duplicated() {
 
-        tokenService.publish(DUMMY_CHECKOUT_ID);
+        tokenService.requestToken(DUMMY_CHECKOUT_ID);
 
         try {
-            tokenService.publish(DUMMY_CHECKOUT_ID);
+            tokenService.requestToken(DUMMY_CHECKOUT_ID);
         }
         catch (Exception ex) {
             assert(ex.getMessage().equals(ErrorCode.TOKEN_PUBLISH_REQ_DUPLICATED.getMessage()));
@@ -49,7 +49,7 @@ class TokenServiceTest {
     @Transactional
     void card_enroll() {
 
-        tokenService.saveCard(DUMMY_CI, DUMMY_CARD_NO);
+        tokenService.requestCardRefId(DUMMY_CI, DUMMY_CARD_NO);
         assert(tokenService.findCard(DUMMY_CI).size() == 1);
     }
 
@@ -58,10 +58,10 @@ class TokenServiceTest {
     @Transactional
     void card_enroll_duplicated() {
 
-        tokenService.saveCard(DUMMY_CI, DUMMY_CARD_NO);
+        tokenService.requestCardRefId(DUMMY_CI, DUMMY_CARD_NO);
 
         try {
-            tokenService.saveCard(DUMMY_CI, DUMMY_CARD_NO);
+            tokenService.requestCardRefId(DUMMY_CI, DUMMY_CARD_NO);
         }
         catch (Exception ex) {
             assert(ex.getMessage().equals(ErrorCode.CARD_DUPLICATED.getMessage()));

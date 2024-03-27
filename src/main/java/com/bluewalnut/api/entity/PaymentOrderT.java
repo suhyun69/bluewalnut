@@ -11,10 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TOKEN")
-public class TokenT {
+@Table(name = "PAYMENT_ORDER")
+public class PaymentOrderT {
 
     @Id
-    private String token;
+    private String paymentOrderId;
+
+    private String amount;
+    private String currency;
     private String checkoutId;
+    private String paymentOrderStatus; // Not Started, Executing, Success, Failed
 }

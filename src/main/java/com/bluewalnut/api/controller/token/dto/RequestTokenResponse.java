@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PublishTokenResponseDto {
+public class RequestTokenResponse {
     private String token;
 }
