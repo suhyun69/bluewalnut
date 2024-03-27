@@ -1,6 +1,7 @@
 package com.bluewalnut.api.controller.token;
 
 import com.bluewalnut.api.controller.token.dto.RequestTokenResponse;
+import com.bluewalnut.api.controller.token.dto.VerifyTokenResponse;
 import com.bluewalnut.api.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +26,14 @@ public class TokenController {
     public ResponseEntity<RequestTokenResponse> RequestToken(String checkoutId) {
         String token = tokenService.requestToken(checkoutId);
         RequestTokenResponse dto = new RequestTokenResponse(token);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping("/verify")
+    @Operation(summary = "Validate Token", description = "토큰 유효성 체크")
+    public ResponseEntity<VerifyTokenResponse> VerifyToken(String token) {
+        Boolean isValid = tokenService.verifyToken(token);
+        VerifyTokenResponse dto = new VerifyTokenResponse(isValid);
         return ResponseEntity.ok().body(dto);
     }
 }

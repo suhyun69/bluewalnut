@@ -1,4 +1,4 @@
-package com.bluewalnut.api.controller.user.dto;
+package com.bluewalnut.api.controller.token.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PaymentRequest {
-    private String ci;
-    private String cardRefId;
-    private String amount;
+public class VerifyTokenResponse {
+    private Boolean isValid;
 }

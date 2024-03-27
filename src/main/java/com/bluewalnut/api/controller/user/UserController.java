@@ -3,7 +3,6 @@ package com.bluewalnut.api.controller.user;
 import com.bluewalnut.api.controller.user.dto.EnrollCardRequest;
 import com.bluewalnut.api.controller.user.dto.EnrollCardResponse;
 import com.bluewalnut.api.controller.user.dto.FindCardResponse;
-import com.bluewalnut.api.controller.user.dto.PaymentRequest;
 import com.bluewalnut.api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
