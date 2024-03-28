@@ -8,7 +8,7 @@
 ## 실행방법
 1. gradlew build
 2. cd build/libs
-3. java -jar v3-0.0.1.SNAMPSHOT.jar
+3. java -jar api-0.0.1.SNAMPSHOT.jar
 
 ## Swagger URL
 > http://localhost:8080/swagger-ui/index.html
