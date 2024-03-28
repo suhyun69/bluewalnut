@@ -10,6 +10,7 @@ import com.bluewalnut.api.repository.CardRepository;
 import com.bluewalnut.api.repository.CheckoutRepository;
 import com.bluewalnut.api.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,8 @@ public class TokenService {
     private final TokenRepository tokenRepository;
     private final CardRepository cardRepository;
     private final CheckoutRepository checkoutRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     public String requestCardRefId(String ci, String encryptedCardNo) {
 
