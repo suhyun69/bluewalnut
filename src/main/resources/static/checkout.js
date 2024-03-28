@@ -1,7 +1,62 @@
 $( document ).ready(function() {
+
+    var ci = "12345";
     
-    
-    // 초기화 시 DB 조회
+    // 내 카드 조회
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "http://localhost:8080/v1/user/card?ci=" + ci,
+        accept: "application/json;charset=UTF-8",
+        contentType: "application/json;charset=UTF-8",
+        // data: JSON.stringify(data),
+        success: function (result) {
+
+            result.cardRefIds.forEach((element)=>{
+
+                // Your Card Section에 추가
+                var card = $( "<li class=\"list-group-item d-flex justify-content-between lh-sm\"><div><h6 className=\"my-0\">" + element + "</h6></div></li>");
+                $("#cardList").append(card);
+
+                var cardCount =$("#cardList").children().length;
+                $("#cardCount").text(cardCount);
+
+                var option = $("<option value=" + element + ">" + element + "</option>");
+                $("#cardRefId").append(option);
+            })
+        }
+    });
+
+    // 내 결제건 조회
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "http://localhost:8080/v1/user/checkout?ci=" + ci,
+        accept: "application/json;charset=UTF-8",
+        contentType: "application/json;charset=UTF-8",
+        // data: JSON.stringify(data),
+        success: function (result) {
+
+            result.checkouts.forEach((element)=>{
+
+                var checkoutId = element.id;
+
+                // Your Checkout Section에 추가
+                var checkout = $( "<li id=\"" + checkoutId + "\" class=\"list-group-item d-flex justify-content-between lh-sm\"><div><h6 className=\"my-0\">" + checkoutId + "</h6></div></li>");
+                $("#checkoutList").append(checkout);
+
+                var checkoutCount =$("#checkoutList").children().length;
+                $("#checkoutCount").text(checkoutCount);
+
+                var small = $("<small className=\"text-body-secondary\">" + element.currency + " " + element.amount + "</small>");
+                $("li[id=" + checkoutId + "]").children().append(small);
+
+                var badge = "";
+                badge = $("<Br/><span class=\"badge text-bg-primary rounded-pill\">" + element.status + "</span>");
+                $("li[id=" + checkoutId + "]").children().append(badge);
+            })
+        }
+    });
     
     
     $("#registryCard").click( function() {
@@ -62,7 +117,7 @@ $( document ).ready(function() {
 
                 checkoutId = result.checkoutId;
 
-                // Your Card Section에 추가
+                // Your Checkout Section에 추가
                 var checkout = $( "<li id=\"" + checkoutId + "\" class=\"list-group-item d-flex justify-content-between lh-sm\"><div><h6 className=\"my-0\">" + checkoutId + "</h6></div></li>");
                 $("#checkoutList").append(checkout);
 
@@ -91,12 +146,6 @@ $( document ).ready(function() {
             contentType: "application/json;charset=UTF-8",
             // data: JSON.stringify(data),
             success: function (result) {
-
-                if(result.error != undefined) {
-                    alert(result.error);
-                    return;
-                }
-
                 token = result.token;
             },
             error: function(result) {
@@ -120,11 +169,6 @@ $( document ).ready(function() {
             contentType: "application/json;charset=UTF-8",
             // data: JSON.stringify(data),
             success: function (result) {
-
-                if(result.error != undefined) {
-                    alert(result.error);
-                    return;
-                }
             },
             error: function(result) {
                 nextStep = false;
@@ -147,11 +191,6 @@ $( document ).ready(function() {
             contentType: "application/json;charset=UTF-8",
             // data: JSON.stringify(data),
             success: function (result) {
-
-                if(result.error != undefined) {
-                    alert(result.error);
-                    return;
-                }
 
                 result.checkouts.forEach((element)=>{
                     var small = $("<small className=\"text-body-secondary\">" + element.currency + " " + element.amount + "</small>");
