@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 
-    var ci = "12345";
+    var ci = $("#ci").text();
     
     // 내 카드 조회
     $.ajax({
@@ -64,7 +64,7 @@ $( document ).ready(function() {
         var refCardId = "";
 
         var data = {}
-        data.ci = "12345";
+        data.ci = $("#ci").text();
         data.cardNo = $("#cardNo").val();
 
         $.ajax({
@@ -100,7 +100,7 @@ $( document ).ready(function() {
 
     $("#checkout").click( function() {
 
-        var ci = "12345";
+        var ci = $("#ci").text();
         var checkoutId = "";
         var token = "";
 
