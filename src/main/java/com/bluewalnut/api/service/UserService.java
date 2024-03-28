@@ -1,5 +1,8 @@
 package com.bluewalnut.api.service;
 
+import com.bluewalnut.api.config.AESUtil;
+import com.bluewalnut.api.config.exception.BusinessException;
+import com.bluewalnut.api.config.exception.ErrorCode;
 import com.bluewalnut.api.domain.Checkout;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,10 +15,19 @@ import java.util.List;
 public class UserService {
 
     private final PaymentService paymentService;
-    private final PasswordEncoder passwordEncoder;
+    // private final PasswordEncoder passwordEncoder;
+    private final AESUtil aesUtil;
 
     public String registryCard(String ci, String cardNo) {
-        String encryptedCardNo = passwordEncoder.encode(cardNo);
+        String encryptedCardNo = cardNo;
+
+        try {
+            encryptedCardNo = aesUtil.encrypt(cardNo);
+        }
+        catch (Exception ex) {
+            throw new BusinessException(ErrorCode.CARD_NO_ENCRYPT_FAIL);
+        }
+
         return paymentService.registryCard(ci, encryptedCardNo);
     }
 

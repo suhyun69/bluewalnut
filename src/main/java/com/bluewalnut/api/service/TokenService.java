@@ -1,5 +1,6 @@
 package com.bluewalnut.api.service;
 
+import com.bluewalnut.api.config.AESUtil;
 import com.bluewalnut.api.config.exception.BusinessException;
 import com.bluewalnut.api.config.exception.ErrorCode;
 import com.bluewalnut.api.domain.CheckoutStatus;
@@ -26,7 +27,7 @@ public class TokenService {
     private final CardRepository cardRepository;
     private final CheckoutRepository checkoutRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    private final AESUtil aesUtil;
 
     public String requestCardRefId(String ci, String encryptedCardNo) {
 

@@ -87,6 +87,13 @@ $( document ).ready(function() {
 
                 var option = $("<option value=" + refCardId + ">" + refCardId + "</option>");
                 $("#cardRefId").append(option);
+            },
+            error: function(result) {
+                nextStep = false;
+                if(result.responseJSON.error != undefined) {
+                    alert(result.responseJSON.error);
+                    return;
+                }
             }
         });
     });
