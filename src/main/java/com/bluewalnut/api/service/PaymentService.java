@@ -3,6 +3,7 @@ package com.bluewalnut.api.service;
 
 import com.bluewalnut.api.config.exception.BusinessException;
 import com.bluewalnut.api.config.exception.ErrorCode;
+import com.bluewalnut.api.domain.Checkout;
 import com.bluewalnut.api.domain.CheckoutStatus;
 import com.bluewalnut.api.entity.CheckoutT;
 import com.bluewalnut.api.entity.TokenT;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,5 +74,12 @@ public class PaymentService {
         checkoutRepository.save(checkoutT);
 
         return checkoutT.getId();
+    }
+
+    public List<Checkout> findCheckout(String ci) {
+        List<CheckoutT> checkoutTList = checkoutRepository.findAllByCi(ci);
+        return checkoutTList.stream()
+                .map(Checkout::new)
+                .collect(Collectors.toList());
     }
 }

@@ -1,5 +1,6 @@
 package com.bluewalnut.api.service;
 
+import com.bluewalnut.api.domain.Checkout;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class UserService {
         return paymentService.findCard(ci);
     }
 
-    public String payment(String ci, String cardRefId, String amount) {
-        return paymentService.payByCardRefId(ci, cardRefId, amount); // token
+    public List<Checkout> findCheckout(String ci) {
+        return paymentService.findCheckout(ci);
     }
 }

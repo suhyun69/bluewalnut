@@ -27,8 +27,6 @@ public class CheckoutT {
     private String status; // Not Started, Executing, Success, Failed
     private LocalDateTime expirationTime;
 
-
-
     public void updateStatus(CheckoutStatus status) {
         this.status = status.name();
     }

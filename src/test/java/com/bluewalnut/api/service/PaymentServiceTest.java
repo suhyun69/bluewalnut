@@ -3,9 +3,7 @@ package com.bluewalnut.api.service;
 import com.bluewalnut.api.config.exception.BusinessException;
 import com.bluewalnut.api.config.exception.ErrorCode;
 import com.bluewalnut.api.entity.CheckoutT;
-import com.bluewalnut.api.repository.CardRepository;
 import com.bluewalnut.api.repository.CheckoutRepository;
-import com.bluewalnut.api.repository.TokenRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,10 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 

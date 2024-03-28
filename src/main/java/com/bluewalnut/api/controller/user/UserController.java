@@ -3,6 +3,8 @@ package com.bluewalnut.api.controller.user;
 import com.bluewalnut.api.controller.user.dto.EnrollCardRequest;
 import com.bluewalnut.api.controller.user.dto.EnrollCardResponse;
 import com.bluewalnut.api.controller.user.dto.FindCardResponse;
+import com.bluewalnut.api.controller.user.dto.FindCheckoutResponse;
+import com.bluewalnut.api.domain.Checkout;
 import com.bluewalnut.api.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,6 +38,14 @@ public class UserController {
     public ResponseEntity<FindCardResponse> findCard(String ci) {
         List<String> cardList = userService.findCard(ci);
         FindCardResponse response = new FindCardResponse(cardList);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/checkout")
+    @Operation(summary = "내 결제건 조회", description = "Checkout 전체 조회")
+    public ResponseEntity<FindCheckoutResponse> findCheckout(String ci) {
+        List<Checkout> checkoutList = userService.findCheckout(ci);
+        FindCheckoutResponse response = new FindCheckoutResponse(checkoutList);
         return ResponseEntity.ok().body(response);
     }
 }
