@@ -45,7 +45,7 @@ class PaymentServiceTest {
     void payByCardRefId__CARD_NOT_FOUND() {
 
         given(tokenService.findCard(any())).willReturn(new ArrayList<>());
-        assertThatThrownBy(() -> paymentService.payByCardRefId(any(), any(), any()))
+        assertThatThrownBy(() -> paymentService.payByCardRefId(DUMMY_CI, DUMMY_CARD_NO, DUMMY_AMOUNT))
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining(ErrorCode.CARD_NOT_FOUND.getMessage());
     }
